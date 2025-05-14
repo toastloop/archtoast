@@ -1,5 +1,4 @@
 #!/bin/sh
-loadkeys us
 [ ! -d /sys/firmware/efi ]&&exit 1
 ping -c1 -w1 8.8.8.8>/dev/null||exit 1
 ping -c1 -w1 google.com>/dev/null||exit 1
