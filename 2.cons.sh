@@ -28,9 +28,11 @@ while true; do
     fi
 
 done
+clear
 
 echo "Selected keymap: $keymap"
 echo "Loading keymap..."
 loadkeys "$keymap" || { echo "Failed to load keymap"; exit 1; }
 echo "Keymap loaded successfully."
-exit 0
+sleep 2
+clear
