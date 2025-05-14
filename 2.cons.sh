@@ -8,4 +8,24 @@ fi
 
 keymaps=`localectl list-keymaps | grep -v '\*' | awk '{print $1}'`
 
-echo "$keymaps" | more
+while true; do
+    echo "Available keymaps:"
+    echo "$keymaps" | more
+    echo "Select a keymap (default: us, show list: list):"
+    read -r keymap
+    if [ "$keymap" = "list" ]; then
+        echo "$keymaps" | more
+    elif [ -z "$keymap" ]; then
+        keymap="us"
+        break
+    elif echo "$keymaps" | grep -q "^$keymap$"; then
+        break
+    else
+        echo "Invalid keymap. Please try again."
+    fi
+done
+echo "Selected keymap: $keymap"
+echo "Loading keymap..."
+loadkeys "$keymap" || { echo "Failed to load keymap"; exit 1; }
+echo "Keymap loaded successfully."
+exit 0
