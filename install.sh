@@ -30,13 +30,7 @@ clear
 
 items=`localectl list-keymaps | awk '{print $1}'`
 while true; do
-    keymap=$(dialog --stdout --menu "Select Keymap" 0 0 0 $items)
-    if [ $? -ne 0 ]; then
-        break
-    fi
-    if [ -z "$keymap" ]; then
-        break
-    fi
+    keymap=`dialog --stdout --menu "Select Keymap" 0 0 0 $items`
     echo "Selected Keymap: $keymap"
     loadkeys $keymap
 done
