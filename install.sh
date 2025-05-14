@@ -7,8 +7,9 @@ echo "Press Enter to continue..."
 read -r _
 clear
 echo "Step 1: Select your keyboard layout"
-echo `localectl list-keymaps`
-echo "Please select your keyboard layout from the list above:"
+echo "Available keyboard layouts:"
+find /usr/share/kbd/keymaps/ -type f -name "*.map.gz" | sed 's|.*/||;s|\.map\.gz||'
+printf "Please select your keyboard layout from the list above:\n"
 while true; do
   read -r keymap
   if [ -z "$keymap" ]; then
