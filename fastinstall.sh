@@ -26,8 +26,8 @@ if [ "$answer" != "y" ]; then
     exit 1
 fi
 parted "$disk" --script mklabel gpt
-parted "$disk" --script mkpart primary 1MiB 100MiB
-parted "$disk" --script mkpart primary 100MiB 100%
+parted "$disk" --script mkpart primary 1MiB 512MiB
+parted "$disk" --script mkpart primary 512MiB 100%
 parted "$disk" --script set 1 esp on
 parted "$disk" --script set 1 boot on
 mkfs.fat -F32 -n BOOT "$disk"1
