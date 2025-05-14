@@ -8,4 +8,4 @@ fi
 
 keymaps=`localectl list-keymaps | grep -v '\*' | awk '{print $1}'`
 
-echo `$keymaps` | more
+echo "$keymaps" | more
