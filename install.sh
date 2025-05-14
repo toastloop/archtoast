@@ -6,20 +6,18 @@ echo "This script will guide you through the installation process."
 echo "Press Enter to continue..."
 read -r _
 clear
-echo "Step 1: Select your keyboard layout"
-echo "Available keyboard layouts:"
-find /usr/share/kbd/keymaps/ -type f -name "*.map.gz" | sed 's|.*/||;s|\.map\.gz||'
-printf "Please select your keyboard layout from the list above:\n"
 while true; do
-  read -r keymap
-  if [ -z "$keymap" ]; then
-    echo "No keyboard layout selected. Please try again."
-  else
-    break
-  fi
+    echo "Please enter your selected keyboard map (e.g., us, de, fr):"
+    echo "Type 'list' to see available maps or 'exit' to quit."
+    read -r keymap
+    if [ "$keymap" = "list" ]; then
+        localectl list-keymaps
+    elif [ "$keymap" = "exit" ]; then
+        echo "Exiting the script."
+        exit 0
+    else
+        loadkeys "$keymap"
+        echo "Keyboard map set to $keymap."
+        break
+    fi
 done
-loadkeys "$keymap"
-echo "Keyboard layout set to $keymap."
-echo "Press Enter to continue..."
-read -r _
-clear
