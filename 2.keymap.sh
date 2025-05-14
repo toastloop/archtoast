@@ -1,5 +1,7 @@
 #!/bin/sh
 
+clear
+
 # Check this script is running inside the installer
 if [ "$INSIDE" != "1" ]; then
     echo "This script must be run from inside the install.sh script"

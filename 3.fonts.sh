@@ -1,5 +1,13 @@
 #!/bin/sh
 
+clear
+
+# Check this script is running inside the installer
+if [ "$INSIDE" != "1" ]; then
+    echo "This script must be run from inside the install.sh script"
+    exit 1
+fi
+
 fonts=$(
   find /usr/share/kbd/consolefonts -type f ! -name '*README*' 2>/dev/null | \
   while IFS= read -r path; do
