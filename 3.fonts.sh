@@ -43,5 +43,6 @@ done
 
 setfont "$font" || { echo "Failed to load font"; exit 1; }
 echo "Font loaded successfully."
-sleep 2
+echo "Press any key to continue..."
+read -r _
 clear

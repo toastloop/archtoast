@@ -36,5 +36,6 @@ echo "Selected keymap: $keymap"
 echo "Loading keymap..."
 loadkeys "$keymap" || { echo "Failed to load keymap"; exit 1; }
 echo "Keymap loaded successfully."
-sleep 2
+echo "Press any key to continue..."
+read -r _
 clear
