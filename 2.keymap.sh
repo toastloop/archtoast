@@ -6,15 +6,15 @@ if [ "$INSIDE" != "1" ]; then
     exit 1
 fi
 
-keymaps=`localectl list-keymaps | grep -v '\*' | awk '{print $1}'`
+keymaps=$(localectl list-keymaps | grep -v '\*' | awk '{print $1}')
 
 while true; do
 
     echo "Select a keymap (default: us, show list: list):"
     read -r keymap
 
-    keymap=`echo "$keymap" | tr '[:upper:]' '[:lower:]'`
-    keymap=`echo "$keymap" | tr -d '[:space:]'`
+    keymap=$(echo "$keymap" | tr '[:upper:]' '[:lower:]')
+    keymap=$(echo "$keymap" | tr -d '[:space:]')
 
     if [ "$keymap" = "list" ]; then
         echo "$keymaps" | less

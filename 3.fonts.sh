@@ -1,13 +1,29 @@
 #!/bin/sh
 
-fonts=`ls /usr/share/kbd/consolefonts | grep -v '\*' | grep -v 'README.*' | sed -E 's/\.(cp|psfu|psf|fnt)?\.gz$//' | awk '{print $1}'`
+fonts=""
+for f in /usr/share/kbd/consolefonts/*; do
+  fname=$(basename "$f")
+
+  case "$fname" in
+    *README*|'*') continue ;;
+  esac
+
+  fname=${fname%.cp.gz}
+  fname=${fname%.psfu.gz}
+  fname=${fname%.psf.gz}
+  fname=${fname%.fnt.gz}
+  fname=${fname%.gz}
+
+  fonts="$fonts
+$fname"
+done
 
 while true; do
 
     echo "Select a font (default: Lat2-Terminus16, show list: list):"
     read -r font
 
-    font=`echo "$font" | tr -d '[:space:]'`
+    font=$(echo "$font" | tr -d '[:space:]')
 
     if [ "$font" = "list" ]; then
         echo "$fonts" | less

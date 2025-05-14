@@ -7,7 +7,7 @@ if [ "$INSIDE" != "1" ]; then
 fi
 
 # Check if the script is run as root
-if [ "`id -u`" -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
     echo "Please run as root"
     exit
 fi
