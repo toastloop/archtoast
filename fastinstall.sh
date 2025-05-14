@@ -23,4 +23,6 @@ scheme=$(parted "$disk" --script print 2>/dev/null | awk -F: '/^Partition Table:
 if [ -z "$scheme" ]; then
     parted "$disk" --script -- mklabel gpt
     scheme="gpt"
+else
+    echo "Partition scheme: $scheme"
 fi
