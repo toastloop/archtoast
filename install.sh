@@ -1,23 +1,43 @@
-#!/bin/sh
-setfont Lat2-Terminus16
+#!/bin/bash
+
+# Check if the script is run as root
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root"
+    exit
+fi
+
+# Check if the script is run in a terminal
+if [ -z "$TERM" ]; then
+    echo "This script must be run in a terminal"
+    exit
+fi
+
+# Check if the script is running from the live USB
+if [ ! -d "/run/archiso/bootmnt" ]; then
+    echo "This script must be run from the live USB"
+    exit
+fi
+
+echo "Installing Dependencies..."
+sudo pacman -Sy
+sudo pacman -S --noconfirm --needed dialog
 clear
-echo "Welcome to the Arch Linux installation script!"
-echo "This script will guide you through the installation process."
-echo "Press Enter to continue..."
-read -r _
+
+echo "Starting Application..."
+echo "Please wait..."
+sleep 2
 clear
+
+items=`localectl list-keymaps | awk '{print $1}'`
 while true; do
-    echo "Please enter your selected keyboard map (e.g., us, de, fr):"
-    echo "Type 'list' to see available maps or 'exit' to quit."
-    read -r keymap
-    if [ "$keymap" = "list" ]; then
-        localectl list-keymaps
-    elif [ "$keymap" = "exit" ]; then
-        echo "Exiting the script."
-        exit 0
-    else
-        loadkeys "$keymap"
-        echo "Keyboard map set to $keymap."
+    keymap=$(dialog --stdout --menu "Select Keymap" 0 0 0 $items)
+    if [ $? -ne 0 ]; then
         break
     fi
+    if [ -z "$keymap" ]; then
+        break
+    fi
+    echo "Selected Keymap: $keymap"
+    loadkeys $keymap
 done
+clear
