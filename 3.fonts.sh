@@ -1,6 +1,6 @@
 #!/bin/sh
 
-fonts=`ls /usr/share/kbd/consolefonts | grep -v '\*' | grep -v 'README.*' | awk '{print $1}'`
+fonts=`ls /usr/share/kbd/consolefonts | grep -v '\*' | grep -v 'README.*' | sed 's/\.psf\.gz$//' | awk '{print $1}'`
 
 while true; do
 
