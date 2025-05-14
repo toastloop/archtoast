@@ -9,7 +9,7 @@ if [ "$INSIDE" != "1" ]; then
 fi
 
 drivenames=$(lsblk -d -n -p -o NAME,SIZE,TYPE | grep disk | awk '{print $1}')
-drivelist=$(lsblk -d -n -p -o NAME,SIZE,TYPE | grep disk | awk '{print "$1 $2}' | sed 's/\/dev\///')
+drivelist=$(lsblk -d -n -p -o NAME,SIZE,TYPE | grep disk | awk '{print $1" "$2}' | sed 's/\/dev\///')
 
 while true; do
 
