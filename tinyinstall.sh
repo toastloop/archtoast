@@ -6,11 +6,11 @@ mkfs.fat -F32 -n BOOT ${d}1& mkfs.ext4 -L ROOT ${d}2&
 wait
 mount ${d}2 /mnt&&mkdir -p /mnt/boot&&mount ${d}1 /mnt/boot
 pacstrap -K /mnt base linux&&genfstab -U /mnt>>/mnt/etc/fstab
-arch-chroot /mnt /bin/sh<<EOF
+arch-chroot /mnt /bin/sh<<'EOF'
 ln -sf /usr/share/zoneinfo/America/Denver /etc/localtime
 hwclock --systohc
-echo en_US.UTF-8 UTF-8>/etc/locale.gen&&locale-gen
-echo en_US.UTF-8>/etc/locale.conf
+echo "en_US.UTF-8 UTF-8">/etc/locale.gen&&locale-gen
+echo "en_US.UTF-8">/etc/locale.conf
 echo KEYMAP=us>/etc/vconsole.conf
 echo archtoast>/etc/hostname
 echo root:root|chpasswd
