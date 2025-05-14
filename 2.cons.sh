@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Check this script is running inside the installer
 if [ "$INSIDE" != "1" ]; then
@@ -9,12 +9,15 @@ fi
 keymaps=`localectl list-keymaps | grep -v '\*' | awk '{print $1}'`
 
 while true; do
-    echo "Available keymaps:"
-    echo "$keymaps" | more
+
     echo "Select a keymap (default: us, show list: list):"
     read -r keymap
+
+    keymap=`echo "$keymap" | tr '[:upper:]' '[:lower:]'`
+    keymap=`echo "$keymap" | tr -d '[:space:]'`
+
     if [ "$keymap" = "list" ]; then
-        echo "$keymaps" | more
+        echo "$keymaps" | less
     elif [ -z "$keymap" ]; then
         keymap="us"
         break
@@ -23,7 +26,9 @@ while true; do
     else
         echo "Invalid keymap. Please try again."
     fi
+
 done
+
 echo "Selected keymap: $keymap"
 echo "Loading keymap..."
 loadkeys "$keymap" || { echo "Failed to load keymap"; exit 1; }
