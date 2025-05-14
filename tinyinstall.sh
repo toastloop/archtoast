@@ -10,11 +10,11 @@ arch-chroot /mnt /bin/sh<<'EOF'
 ln -sf /usr/share/zoneinfo/America/Denver /etc/localtime
 hwclock --systohc
 echo "en_US.UTF-8 UTF-8">/etc/locale.gen&&locale-gen
-echo "en_US.UTF-8">/etc/locale.conf
+echo "LANG=en_US.UTF-8">/etc/locale.conf
 echo KEYMAP=us>/etc/vconsole.conf
 echo archtoast>/etc/hostname
 echo root:root|chpasswd
-pacman -S --noconfirm grub efibootmgr os-prober dhcpcd
+pacman -S --noconfirm grub efibootmgr os-prober dhcpcd vim
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ArchToast
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable dhcpcd
