@@ -4,7 +4,7 @@ fonts=`ls /usr/share/kbd/consolefonts | grep -v '\*' | grep -v 'README.*' | sed 
 
 while true; do
 
-    echo "Select a font (default: Lat2-Terminus16.psfu.gz, show list: list):"
+    echo "Select a font (default: Lat2-Terminus16, show list: list):"
     read -r font
 
     font=`echo "$font" | tr -d '[:space:]'`
@@ -12,7 +12,7 @@ while true; do
     if [ "$font" = "list" ]; then
         echo "$fonts" | less
     elif [ -z "$font" ]; then
-        font="Lat2-Terminus16.psfu.gz"
+        font="Lat2-Terminus16"
         break
     elif echo "$fonts" | grep -q "^$font$"; then
         break
