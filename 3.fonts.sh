@@ -1,22 +1,17 @@
 #!/bin/sh
 
-fonts=""
-for f in /usr/share/kbd/consolefonts/*; do
-  fname=$(basename "$f")
-
-  case "$fname" in
-    *README*|'*') continue ;;
-  esac
-
-  fname=${fname%.cp.gz}
-  fname=${fname%.psfu.gz}
-  fname=${fname%.psf.gz}
-  fname=${fname%.fnt.gz}
-  fname=${fname%.gz}
-
-  fonts="$fonts
-$fname"
-done
+fonts=$(
+  find /usr/share/kbd/consolefonts -type f ! -name '*README*' 2>/dev/null | \
+  while IFS= read -r path; do
+    fname=$(basename "$path")
+    fname=${fname%.cp.gz}
+    fname=${fname%.psfu.gz}
+    fname=${fname%.psf.gz}
+    fname=${fname%.fnt.gz}
+    fname=${fname%.gz}
+    echo "$fname"
+  done | sort -u
+)
 
 while true; do
 
